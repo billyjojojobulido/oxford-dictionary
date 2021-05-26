@@ -25,8 +25,15 @@ the app itself)
 * Database - SQLIte-JDBC
 
 ## TDD Logbook
-1. Feature Testing: Log In: user will need to input their api key and id and the system will check if the credentials are valid.
-    commit ID: 
+  > Round 1: 
+  Testing:
+  * api id, api key validation checking
+  * sending email
+  * check entity's existence in the database
+  * retreive entity from database
+  * update entity in database
+  
+      RED `commit ID: ff3a8c88ca16af5d713ac29fa83f6115e252c9b0`
 
 ## Citation
 * The scaffold codes for the GUI in package view are mainly from the code I wrote in this unit for task3.
