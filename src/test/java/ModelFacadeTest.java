@@ -19,16 +19,14 @@ public class ModelFacadeTest {
     private Model model = null;
 
     /** Mock */
-    private Map<String, String> database;
     private Database mockDB;
     private HTTPManager mockHTTP;
 
     @Before
     public void init(){
-        model = new ModelFacade();
-        database = new HashMap<>();
         mockDB = mock(Database.class);
         mockHTTP = mock(HTTPManager.class);
+        model = new ModelFacade(mockDB, mockHTTP);
     }
 
     @Test
