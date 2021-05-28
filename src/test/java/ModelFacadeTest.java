@@ -37,9 +37,9 @@ public class ModelFacadeTest {
 
     @Test
     public void verifySendEmail(){
-        model.sendEmail("apikey", "abc@abc.com", "abc@abc.com", "abc@abc.com",
+        model.sendEmail("abc@abc.com", "abc@abc.com", "abc@abc.com",
                 "bc", "ac", "subject", "some data", "bc");
-        verify(mockHTTP, atLeast(1)).sendEmail("apikey", "abc@abc.com",
+        verify(mockHTTP, atLeast(1)).sendEmail("abc@abc.com",
                 "abc@abc.com", "abc@abc.com", "bc", "ac", "subject",
                 "text/plain", "some sort of email","bc");
     }
@@ -54,7 +54,7 @@ public class ModelFacadeTest {
     public void verifyGetWordGetFromCache(){
         model.getWord("word");
         when(mockDB.entityExists("word")).thenReturn(null);
-        verify(mockHTTP, atLeast(1)).getWord("id","key", "entries","en-us","word");
+        verify(mockHTTP, atLeast(1)).getWord("entries","en-us","word");
     }
 
     @Test

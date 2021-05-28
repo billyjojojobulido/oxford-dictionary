@@ -12,7 +12,18 @@ import java.net.URL;
 
 public class HTTPManager {
 
-    public JSONObject getWord(String appId, String appKey, String endpoint, String languageCode, String wordID){
+    private String id;
+    private String key;
+    private String emailKey;
+
+    public HTTPManager(String id, String key, String emailKey){
+        this.id = id;
+        this.key = key;
+        this.emailKey = emailKey;
+    }
+
+
+    public JSONObject getWord(String endpoint, String languageCode, String wordID){
         return null;
     }
 
@@ -20,7 +31,7 @@ public class HTTPManager {
         return false;
     }
 
-    public JSONObject sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply,
+    public JSONObject sendEmail(String emailTo, String emailFrom, String emailReply,
                                        String targetName, String signature, String subject, String type, String value,
                                        String replyName){
         return null;

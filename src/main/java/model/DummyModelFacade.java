@@ -29,7 +29,8 @@ public class DummyModelFacade implements Model{
     }
 
     @Override
-    public void sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String replyName) {
+    public void sendEmail(String emailTo, String emailFrom, String emailReply, String targetName,
+                          String signature, String subject, String data, String replyName) {
 
     }
 

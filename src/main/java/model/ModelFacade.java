@@ -1,10 +1,16 @@
 package model;
 
+import controller.HTTPManager;
 import org.json.simple.JSONObject;
 
 public class ModelFacade implements Model{
 
-    public ModelFacade(){
+    private Database db;
+    private HTTPManager manager;
+
+    public ModelFacade(Database db, HTTPManager manager){
+        this.db = db;
+        this.manager = manager;
     }
 
 
@@ -30,17 +36,16 @@ public class ModelFacade implements Model{
 
     @Override
     public boolean logIn(String apiId, String apiKey) {
-        return false;
+        return  false;
     }
 
-    @Override
-    public void sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String replyName) {
 
+    @Override
+    public void sendEmail(String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String data, String replyName) {
     }
 
     @Override
     public void getWord(String word) {
-
     }
 
 }
