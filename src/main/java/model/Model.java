@@ -17,6 +17,6 @@ public interface Model {
     void sendEmail(String emailTo, String emailFrom, String emailReply,
                    String targetName, String signature, String subject, String data, String replyName);
 
-    void getWord(String word);
+    JSONObject getWord(String word);
 
 }

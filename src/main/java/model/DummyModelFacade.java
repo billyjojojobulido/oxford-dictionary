@@ -35,7 +35,7 @@ public class DummyModelFacade implements Model{
     }
 
     @Override
-    public void getWord(String word) {
-
+    public JSONObject getWord(String word) {
+        return null;
     }
 }
