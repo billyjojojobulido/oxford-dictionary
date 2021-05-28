@@ -1,6 +1,8 @@
 package model;
 import org.json.simple.JSONObject;
 
+import java.sql.*;
+
 public class Database {
 
     private boolean tableExists(String tableName){
@@ -8,10 +10,56 @@ public class Database {
     }
 
     public JSONObject entityExists(String word){
+        Connection connection = null;
+        try
+        {
+            connection = DriverManager.getConnection("jdbc:sqlite:entity.db");
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            ResultSet rs = statement.executeQuery(String.format("select * from entity where word == \"%s\"", word));
+
+            while(rs.next()){
+                System.out.println("word = " + rs.getString("word"));
+                System.out.println("info = " + rs.getString("info"));
+            }
+        }
+        catch(SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
         return null;
     }
 
     public void updateEntity(String word, JSONObject data){
+        Connection connection = null;
+        try {
+            // create a database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:entity.db");
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.executeUpdate(String.format("insert into entity values(\"%s\", \"%s\")",word,data));
+
+        }
+        catch(SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
     }
 
 }
