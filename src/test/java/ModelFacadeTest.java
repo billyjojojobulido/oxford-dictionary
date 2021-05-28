@@ -38,7 +38,7 @@ public class ModelFacadeTest {
     @Test
     public void verifySendEmail(){
         model.sendEmail("apikey", "abc@abc.com", "abc@abc.com", "abc@abc.com",
-                "bc", "ac", "subject", "bc");
+                "bc", "ac", "subject", "some data", "bc");
         verify(mockHTTP, atLeast(1)).sendEmail("apikey", "abc@abc.com",
                 "abc@abc.com", "abc@abc.com", "bc", "ac", "subject",
                 "text/plain", "some sort of email","bc");
