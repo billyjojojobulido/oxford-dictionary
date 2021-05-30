@@ -1,33 +1,32 @@
 package model;
 
-import controller.HTTPManager;
 import org.json.simple.JSONObject;
+import org.junit.Test;
 
 public class ModelFacade implements Model{
 
-    private Database db;
     private HTTPManager manager;
+    private Database db;
 
-    public ModelFacade(Database db, HTTPManager manager){
-        this.db = db;
+    public ModelFacade(HTTPManager manager, Database db){
         this.manager = manager;
+        this.db = db;
     }
 
 
     @Override
     public boolean hasCached(String word) {
-        JSONObject ret = this.db.entityExists(word);
-        return null == ret;
+        return null != this.db.entityExists(word);
     }
 
     @Override
-    public JSONObject getCachedEntry(String word) {
+    public String getCachedEntry(String word) {
         return this.db.entityExists(word);
     }
 
     @Override
     public void updateDB(String word, JSONObject info) {
-        this.db.updateEntity(word, info);
+        this.db.updateEntity(word, info.toJSONString());
     }
 
     @Override
@@ -37,22 +36,31 @@ public class ModelFacade implements Model{
 
     @Override
     public boolean logIn(String apiId, String apiKey) {
-        return this.manager.credentialIsValid(apiId, apiKey);
-    }
-
-
-    @Override
-    public void sendEmail(String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String data, String replyName) {
-        this.manager.sendEmail(emailTo, emailFrom, emailReply, targetName, signature, subject, "text/plain",data, replyName);
-    }
-
-    @Override
-    public JSONObject getWord(String word) {
-        JSONObject ret = this.db.entityExists(word);
-        if (ret != null){
-            return ret;
+        if (this.manager.authenticate(apiId, apiKey)){
+            this.manager.setApiId(apiId);
+            this.manager.setApiKey(apiKey);
+            return true;
+        } else {
+            return false;
         }
-        return this.manager.getWord("entries", "en-gb", word);
+    }
+
+    @Override
+    public boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String value, String replyName) {
+        JSONObject ret = manager.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, "text/plain", value, replyName);
+        if (ret == null){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String getWordFromAPI(String word) {
+        String ret = this.manager.getWord(word);
+        if (ret != null) {
+            this.db.updateEntity(word, ret);
+        }
+        return ret;
     }
 
 }

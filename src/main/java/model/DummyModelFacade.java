@@ -3,13 +3,14 @@ package model;
 import org.json.simple.JSONObject;
 
 public class DummyModelFacade implements Model{
+
     @Override
     public boolean hasCached(String word) {
         return false;
     }
 
     @Override
-    public JSONObject getCachedEntry(String word) {
+    public String getCachedEntry(String word) {
         return null;
     }
 
@@ -29,13 +30,13 @@ public class DummyModelFacade implements Model{
     }
 
     @Override
-    public void sendEmail(String emailTo, String emailFrom, String emailReply, String targetName,
-                          String signature, String subject, String data, String replyName) {
-
+    public boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName,
+                             String signature, String subject, String value, String replyName) {
+        return false;
     }
 
     @Override
-    public JSONObject getWord(String word) {
+    public String getWordFromAPI(String word) {
         return null;
     }
 }

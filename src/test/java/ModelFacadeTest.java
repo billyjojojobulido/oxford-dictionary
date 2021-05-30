@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-import controller.HTTPManager;
+import model.HTTPManager;
 import model.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,42 +19,49 @@ public class ModelFacadeTest {
     private Model model = null;
 
     /** Mock */
+    private Map<String, String> database;
     private Database mockDB;
     private HTTPManager mockHTTP;
 
     @Before
     public void init(){
+        database = new HashMap<>();
         mockDB = mock(Database.class);
         mockHTTP = mock(HTTPManager.class);
-        model = new ModelFacade(mockDB, mockHTTP);
+        model = new ModelFacade(mockHTTP, mockDB);
     }
 
     @Test
     public void verifyLogInRequest(){
-        model.logIn("A", "B");
-        verify(mockHTTP, atLeast(1)).credentialIsValid("A", "B");
+        boolean test = model.logIn("a", "b");
+        verify(mockHTTP, atLeast(1)).authenticate("a", "b");
     }
 
     @Test
-    public void verifySendEmail(){
-        model.sendEmail("abc@abc.com", "abc@abc.com", "abc@abc.com",
-                "bc", "ac", "subject", "some sort of email", "bc");
-        verify(mockHTTP, atLeast(1)).sendEmail("abc@abc.com",
-                "abc@abc.com", "abc@abc.com", "bc", "ac", "subject",
-                "text/plain", "some sort of email","bc");
+    public void verifyWordRequest(){
+        model.getWordFromAPI("word");
+        verify(mockHTTP, atLeast(1)).getWord(anyString());
+    }
+
+    @Test
+    public void verifySendEmailRequest(){
+        model.sendEmail("someString","someString","someString","someString",
+                "someString","someString","someString","someString","someString");
+        verify(mockHTTP, atLeast(1)).sendEmail("someString","someString",
+                "someString","someString","someString","someString","someString","text/plain","someString","someString");
     }
 
     @Test
     public void verifyGetWordCheckCache(){
-        model.getWord("word");
+        model.getCachedEntry("word");
         verify(mockDB, atLeast(1)).entityExists("word");
     }
 
     @Test
-    public void verifyGetWordGetFromCache(){
-        model.getWord("word");
-        when(mockDB.entityExists("word")).thenReturn(null);
-        verify(mockHTTP, atLeast(1)).getWord("entries","en-gb","word");
+    public void verifyGetWordGetFromCache() {
+        model.getWordFromAPI("word");
+        when(mockDB.entityExists("word")).thenReturn("true");
+        verify(mockHTTP, atLeast(1)).getWord(anyString());
     }
 
     @Test
@@ -63,7 +70,7 @@ public class ModelFacadeTest {
         try{
             JSONObject info = (JSONObject) parser.parse("{\"a\":\"info\"}");
             model.updateDB("a", info);
-            verify(mockDB, atLeast(1)).updateEntity("a", info);
+            verify(mockDB, atLeast(1)).updateEntity(anyString(), anyString());
         } catch (ParseException e){
             fail();
         }

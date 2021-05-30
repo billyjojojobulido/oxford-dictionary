@@ -6,7 +6,7 @@ public interface Model {
 
     boolean hasCached(String word);
 
-    JSONObject getCachedEntry(String word);
+    String getCachedEntry(String word);
 
     void updateDB(String word, JSONObject info);
 
@@ -14,9 +14,9 @@ public interface Model {
 
     boolean logIn(String apiId, String apiKey);
 
-    void sendEmail(String emailTo, String emailFrom, String emailReply,
-                   String targetName, String signature, String subject, String data, String replyName);
+    boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply,
+                      String targetName, String signature, String subject, String value, String replyName);
 
-    JSONObject getWord(String word);
+    String getWordFromAPI(String word);
 
 }
