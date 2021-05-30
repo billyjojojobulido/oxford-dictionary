@@ -33,7 +33,11 @@ the app itself)
   * retreive entity from database
   * update entity in database
   
-      RED `commit ID: 6b9653a07eacd2f1c682d2ef6aeeb0e3ba4ce3ec`
+      RED      `commit ID: 658d6e3fd39af27412b5516c7a359c5a2ae45a52`
+      
+      GREED    `commit ID: ded3f2e8cd84995871fc9bbf8bd421c3c9a40e4d`
+      
+      REFACTOR `commit ID: 9fbb030d55aa94c54d5836d14f8584195d1df3ee`
 
 ## Citation
 * The scaffold codes for the GUI in package view are mainly from the code I wrote in this unit for task3.
