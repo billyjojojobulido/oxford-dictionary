@@ -67,6 +67,19 @@ public class Decoder {
                 ret.append("\n");
             }
         }
+
+        JSONArray origins = (JSONArray) entry.get("etymologies");
+        ret.append("Origin: \n");
+        if (origins == null || origins.size() < 1){
+            ret.append("\tNone\n");
+        } else {
+            for (int i = 0; i<origins.size(); i++){
+                ret.append("\t");
+                ret.append((String) origins.get(i));
+                ret.append("\n");
+            }
+        }
+
         JSONArray senses = (JSONArray) entry.get("senses");
         if (senses == null || senses.size() < 1){
             ret.append("Definitions:\n\tNone\n");
