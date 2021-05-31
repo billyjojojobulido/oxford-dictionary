@@ -75,8 +75,7 @@ public class RequestWindow extends JFrame {
         this.send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.reportData("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", "baocheng0121@gmail.com", "bwan3675@uni.sydney.edu.au", "bwan3675@uni.sydney.edu.au", "Baocheng Wang", "Baocheng Wang", "Your Search Results for ", area.getText(), "Baocheng Wang");
-                send.setEnabled(false);
+                controller.reportData("Your Search Results for "+word.getText(), area.getText());
                 send.setEnabled(false);
             }
         });

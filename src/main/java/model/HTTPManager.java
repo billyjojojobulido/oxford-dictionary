@@ -138,8 +138,6 @@ public class HTTPManager {
                 sb.append((char) c);
             }
             String response = sb.toString();
-            System.out.println(response.length());
-            System.out.println(response);
             if (response.length() == 0){
                 return null;
             }

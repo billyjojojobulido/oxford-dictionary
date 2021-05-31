@@ -37,25 +37,27 @@ public class Decoder {
         StringBuilder ret = new StringBuilder("Word: ");
         ret.append((String)raw.get("id"));
         ret.append("\n");
-
         JSONArray results = (JSONArray) raw.get("results");
         if (results == null || results.size() < 1){
             return "This is a header word, but None Entry Found";
         }
-
         JSONObject result = (JSONObject) results.get(0);
         JSONArray lexicalEntries = (JSONArray) result.get("lexicalEntries");
         if (lexicalEntries == null || lexicalEntries.size() < 1){
             return "This is a header word, but None Entry Found";
         }
-
         JSONObject lexicalEntry = (JSONObject) lexicalEntries.get(0);
+        if (lexicalEntry == null){
+            return "This is a header word, but None Entry Found";
+        }
         JSONArray entries=  (JSONArray) lexicalEntry.get("entries");
         if (entries == null || entries.size() < 1){
             return "This is a header word, but None Entry Found";
         }
-
         JSONObject entry = (JSONObject) entries.get(0);
+        if (entry == null){
+            return "This is a header word, but None Entry Found";
+        }
         JSONArray pronunciations = (JSONArray) entry.get("pronunciations");
         ret.append("Pronunciations: \n");
         if (pronunciations == null || pronunciations.size() < 1){
@@ -87,10 +89,13 @@ public class Decoder {
         } else{
             for (int i =0 ; i<senses.size(); i++){
                 JSONObject sense = (JSONObject) senses.get(i);
+                if (sense == null){
+                    continue;
+                }
                 JSONArray definitions = (JSONArray) sense.get("definitions");
                 ret.append("definition: ");
-                if (definitions.size() < 1){
-                    ret.append("None\n");
+                if (definitions == null || definitions.size() < 1){
+                    ret.append("\tNone\n");
                 } else {
                     String definition = (String) definitions.get(0);
                     ret.append("\t");

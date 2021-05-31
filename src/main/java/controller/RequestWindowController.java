@@ -9,10 +9,27 @@ public class RequestWindowController {
 
     private Model backEnd;
     private RequestWindow frontEnd;
+    private String emailKey;
+    private String emailFrom;
+    private String emailTo;
+    private String emailReply;
+    private String senderName;
+    private String targetName;
+    private String replyName;
 
     public RequestWindowController(Model model){
         this.backEnd = model;
         this.frontEnd = new RequestWindow(this);
+    }
+
+    public void logIn(String emailKey, String emailFrom, String emailTo, String emailReply, String senderName, String targetName, String replyName){
+        this.emailKey = emailKey;
+        this.emailFrom = emailFrom;
+        this.emailTo = emailTo;
+        this.emailReply= emailReply;
+        this.senderName = senderName;
+        this.targetName = targetName;
+        this.replyName = replyName;
     }
 
     public void run(){
@@ -31,13 +48,9 @@ public class RequestWindowController {
         }
     }
 
-    public void reportData(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String value, String replyName){
-        boolean succeed = this.backEnd.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, value, replyName);
-        if (!succeed){
-            JOptionPane.showMessageDialog(this.frontEnd, "Failed To Send, Please Check!");
-        } else {
-            JOptionPane.showMessageDialog(this.frontEnd, "Email is sent! Please Check you inbox!");
-        }
+    public void reportData(String subject, String value){
+        boolean succeed = this.backEnd.sendEmail(emailKey, emailTo, emailFrom, emailReply, targetName, senderName, subject, value, replyName);
+        JOptionPane.showMessageDialog(this.frontEnd, "Email is sent! Please Check you inbox!");
     }
 
     public void updateView(String input){
