@@ -109,6 +109,9 @@ public class HTTPManager {
                                 String targetName, String signature, String subject, String type, String value,
                                 String replyName){
         String link = "https://api.sendgrid.com/v3/mail/send";
+        value = value.replace('\n', ' ');
+        value = value.replace('\t', ' ');
+
         try {
             URL url = new URL(link);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -135,6 +138,7 @@ public class HTTPManager {
                 sb.append((char) c);
             }
             String response = sb.toString();
+            System.out.println(response.length());
             System.out.println(response);
             if (response.length() == 0){
                 return null;

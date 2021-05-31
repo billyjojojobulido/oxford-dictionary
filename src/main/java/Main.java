@@ -21,6 +21,7 @@ public class Main {
         }
 
         Database db = new Database();
+
         HTTPManager manager = new HTTPManager();
 
         Model model =  new ModelFacade(manager, db);
@@ -30,6 +31,7 @@ public class Main {
         RequestWindowController controller = new RequestWindowController(model);
 
         controller.run();
+
 
     }
 

@@ -1,12 +1,14 @@
 package view;
 
 import controller.RequestWindowController;
+import org.json.simple.JSONObject;
 
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RequestWindow extends JFrame {
     static RequestWindow frame;
@@ -73,6 +75,8 @@ public class RequestWindow extends JFrame {
         this.send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                controller.reportData("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", "baocheng0121@gmail.com", "bwan3675@uni.sydney.edu.au", "bwan3675@uni.sydney.edu.au", "Baocheng Wang", "Baocheng Wang", "Your Search Results for ", area.getText(), "Baocheng Wang");
+                send.setEnabled(false);
                 send.setEnabled(false);
             }
         });

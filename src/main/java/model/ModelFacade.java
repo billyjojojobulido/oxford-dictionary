@@ -48,10 +48,7 @@ public class ModelFacade implements Model{
     @Override
     public boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String value, String replyName) {
         JSONObject ret = manager.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, "text/plain", value, replyName);
-        if (ret == null){
-            return false;
-        }
-        return true;
+        return ret != null;
     }
 
     @Override
