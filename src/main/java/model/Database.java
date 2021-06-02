@@ -12,29 +12,6 @@ import java.sql.Statement;
 
 public class Database {
 
-    public void refresh(){
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/entity.db");
-            Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            statement.executeUpdate("drop table if exists entity");
-            statement.executeUpdate("create table entity (word string, info text)");
-        }
-        catch(SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        finally {
-            try {
-                if(connection != null)
-                    connection.close();
-            }
-            catch(SQLException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-    }
-
     public String entityExists(String word){
         JSONParser parser = new JSONParser();
         Connection connection = null;

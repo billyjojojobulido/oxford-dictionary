@@ -3,7 +3,7 @@ package controller;
 import model.Model;
 import view.RequestWindow;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 public class RequestWindowController {
 

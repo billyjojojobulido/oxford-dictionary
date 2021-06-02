@@ -9,27 +9,37 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
-        String[] arg = new String[2];
 
-        Database db = new Database();
+        InputHTTP in = null;
+        OutputHTTP out = null;
 
-        HTTPManager manager = new HTTPManager();
-
-        Model model = null;
-
-        if (args.length > 0) {
-            if (args[0].equals("offline")) {
-                model = new DummyModelFacade();
-            } else if (args[0].equals("online")) {
-                model =  new ModelFacade(manager, db);
+        if (args.length >= 2) {
+            if (args[0].strip().equals("offline")) {
+                in = new DummyInput();
+            } else if (args[0].strip().equals("online")) {
+                in = new InputHTTP();
+            } else {
+                System.out.println("INVALID COMMAND LINE ARGUMENT!");
+                return;
+            }
+            if (args[1].strip().equals("offline")){
+                out = new DummyOutput();
+            } else if (args[1].strip().equals("online")){
+                out = new OutputHTTP();
             } else {
                 System.out.println("INVALID COMMAND LINE ARGUMENT!");
                 return;
             }
         } else {
-            System.out.println("NO COMMAND LINE ARGUMENT!");
+            System.out.println("NOT ENOUGH COMMAND LINE ARGUMENT PROVIDED!");
             return;
         }
+
+        Database db = new Database();
+
+        HTTPManager manager = new HTTPManager(in, out);
+
+        Model model = null;
 
         String apiId = "";
         String apiKey = "";
@@ -75,6 +85,8 @@ public class Main {
             return;
         }
 
+        model = new ModelFacade(manager, db);
+
         model.logIn(apiId, apiKey);
 
         RequestWindowController controller = new RequestWindowController(model);
@@ -82,7 +94,6 @@ public class Main {
         controller.logIn(emailKey, emailFrom, emailTo, emailReply, senderName, targetName, replyName);
 
         controller.run();
-
 
     }
 

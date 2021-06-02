@@ -16,7 +16,42 @@ public class RequestWindow extends JFrame {
     private JButton check;
     private JButton send;
     private JTextArea area;
+    private JTextField word;
     private  RequestWindowController controller;
+
+    class ThreadSender implements Runnable{
+        @Override
+        public void run() {
+            controller.reportData("Your Search Results for "+ word.getText(), area.getText());
+            send.setEnabled(false);
+        }
+
+    }
+
+    class ThreadChecker implements Runnable{
+        @Override
+        public void run(){
+            String wordToCheck = word.getText();
+            if (wordToCheck == null || wordToCheck.length() == 0){
+                JOptionPane.showMessageDialog(RequestWindow.this, "Please Enter A Word!");
+                return;
+            }
+            boolean cached = controller.checkCache(wordToCheck);
+            String ret = null;
+            if (cached){
+                if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)){
+                    ret = controller.retrieveData(wordToCheck, true);
+                    controller.updateView(ret);
+                    send.setEnabled(true);
+                    return;
+                }
+            }
+            ret = controller.retrieveData(wordToCheck, false);
+            controller.updateView(ret);
+            send.setEnabled(true);
+        }
+    }
+
 
     /** setting up the interface frame **/
     public RequestWindow(RequestWindowController controller) {
@@ -42,7 +77,7 @@ public class RequestWindow extends JFrame {
 
         JLabel nameLabel = new JLabel("Enter a word");
 
-        JTextField word = new JTextField();
+        word = new JTextField();
         word.setColumns(10);
 
 
@@ -50,24 +85,8 @@ public class RequestWindow extends JFrame {
         this.check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String wordToCheck = word.getText();
-                if (wordToCheck == null || wordToCheck.length() == 0){
-                    JOptionPane.showMessageDialog(RequestWindow.this, "Please Enter A Word!");
-                    return;
-                }
-                boolean cached = controller.checkCache(wordToCheck);
-                String ret = null;
-                if (cached){
-                    if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)){
-                        ret = controller.retrieveData(wordToCheck, true);
-                        controller.updateView(ret);
-                        send.setEnabled(true);
-                        return;
-                    }
-                }
-                ret = controller.retrieveData(wordToCheck, false);
-                controller.updateView(ret);
-                send.setEnabled(true);
+                Thread checkerThread = new Thread(new ThreadChecker());
+                checkerThread.start();
             }
         });
 
@@ -75,8 +94,8 @@ public class RequestWindow extends JFrame {
         this.send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.reportData("Your Search Results for "+word.getText(), area.getText());
-                send.setEnabled(false);
+                Thread senderThread = new Thread(new ThreadSender());
+                senderThread.start();
             }
         });
         this.send.setEnabled(false);
