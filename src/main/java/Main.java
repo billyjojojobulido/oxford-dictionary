@@ -1,8 +1,5 @@
 import controller.RequestWindowController;
-import model.Database;
-import model.HTTPManager;
-import model.Model;
-import model.ModelFacade;
+import model.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,16 +10,25 @@ public class Main {
 
     public static void main(String[] args) {
         String[] arg = new String[2];
+
+        Database db = new Database();
+
+        HTTPManager manager = new HTTPManager();
+
+        Model model = null;
+
         if (args.length > 0) {
             if (args[0].equals("offline")) {
-                System.out.println("OFFLINE");
-                arg[0] = "offline";
+                model = new DummyModelFacade();
             } else if (args[0].equals("online")) {
-                System.out.println("ONLINE");
-                arg[0] = "online";
+                model =  new ModelFacade(manager, db);
             } else {
-                System.out.println("Invalid Parameter");
+                System.out.println("INVALID COMMAND LINE ARGUMENT!");
+                return;
             }
+        } else {
+            System.out.println("NO COMMAND LINE ARGUMENT!");
+            return;
         }
 
         String apiId = "";
@@ -68,13 +74,6 @@ public class Main {
         } catch (ParseException e){
             return;
         }
-
-
-        Database db = new Database();
-
-        HTTPManager manager = new HTTPManager();
-
-        Model model =  new ModelFacade(manager, db);
 
         model.logIn(apiId, apiKey);
 
