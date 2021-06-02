@@ -3,6 +3,7 @@
 
 ## Table of contents
 * [API](#api)
+* [Implementation Level](#implementation-level)
 * [Dependencies](#dependencies)
 * [Configuration](#configuration)
 * [Operation](#operation)
@@ -19,6 +20,9 @@
 > OUTPUT API: https://sendgrid.com/solutions/email-api/
   * Send the `report data` as an email to a single configured email address (can be configured in a text config file or
 the app itself) 
+
+## Implementation Level
+Distinction: TDD & Database & Concurrency
 
 ## Dependencies
 * Test - JUnit 4
