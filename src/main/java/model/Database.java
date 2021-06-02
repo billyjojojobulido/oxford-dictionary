@@ -1,4 +1,5 @@
 package model;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,42 +13,38 @@ import java.sql.Statement;
 
 public class Database {
 
-    public String entityExists(String word){
+    public String entityExists(String word) {
         JSONParser parser = new JSONParser();
         Connection connection = null;
-        try
-        {
+        try {
             connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/entity.db");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
             ResultSet rs = statement.executeQuery(String.format("select * from entity where word == \"%s\"", word));
             StringBuilder sb = new StringBuilder();
             int counter = 0;
-            while(rs.next()){
+            while (rs.next()) {
                 sb.append(rs.getString("info"));
-                counter ++;
+                counter++;
             }
-            if (counter == 0){
+            if (counter == 0) {
                 return null;
             }
             return sb.toString();
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
-        }
-        finally {
+        } finally {
             try {
-                if(connection != null)
+                if (connection != null)
                     connection.close();
-            }
-            catch(SQLException e) {
+            } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         }
         return null;
     }
 
-    public void updateEntity(String word, String data){
+    public void updateEntity(String word, String data) {
         Connection connection = null;
         try {
             // create a database connection
@@ -58,24 +55,21 @@ public class Database {
             // test if such entry has been cached
             ResultSet rs = statement.executeQuery(String.format("select * from entity where word == \"%s\"", word));
 
-            while(rs.next()){
-                if (!rs.getString("info").equals(data)){
+            while (rs.next()) {
+                if (!rs.getString("info").equals(data)) {
                     return;
                 }
             }
 
-            statement.executeUpdate(String.format("insert into entity values(\"%s\", \"%s\")",word,data));
+            statement.executeUpdate(String.format("insert into entity values(\"%s\", \"%s\")", word, data));
 
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
-        }
-        finally {
+        } finally {
             try {
-                if(connection != null)
+                if (connection != null)
                     connection.close();
-            }
-            catch(SQLException e) {
+            } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
         }

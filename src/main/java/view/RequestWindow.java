@@ -17,29 +17,29 @@ public class RequestWindow extends JFrame {
     private JButton send;
     private JTextArea area;
     private JTextField word;
-    private  RequestWindowController controller;
+    private RequestWindowController controller;
 
-    class ThreadSender implements Runnable{
+    class ThreadSender implements Runnable {
         @Override
         public void run() {
-            controller.reportData("Your Search Results for "+ word.getText(), area.getText());
+            controller.reportData("Your Search Results for " + word.getText(), area.getText());
             send.setEnabled(false);
         }
 
     }
 
-    class ThreadChecker implements Runnable{
+    class ThreadChecker implements Runnable {
         @Override
-        public void run(){
+        public void run() {
             String wordToCheck = word.getText();
-            if (wordToCheck == null || wordToCheck.length() == 0){
+            if (wordToCheck == null || wordToCheck.length() == 0) {
                 JOptionPane.showMessageDialog(RequestWindow.this, "Please Enter A Word!");
                 return;
             }
             boolean cached = controller.checkCache(wordToCheck);
             String ret = null;
-            if (cached){
-                if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)){
+            if (cached) {
+                if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)) {
                     ret = controller.retrieveData(wordToCheck, true);
                     controller.updateView(ret);
                     send.setEnabled(true);
@@ -53,7 +53,9 @@ public class RequestWindow extends JFrame {
     }
 
 
-    /** setting up the interface frame **/
+    /**
+     * setting up the interface frame
+     **/
     public RequestWindow(RequestWindowController controller) {
         this.controller = controller;
 
@@ -71,9 +73,9 @@ public class RequestWindow extends JFrame {
 
         this.area = new JTextArea("NULL", 30, 30);
         this.area.setForeground(Color.BLACK);
-        this.area.setFont(new Font("Arial",Font.BOLD,13));
+        this.area.setFont(new Font("Arial", Font.BOLD, 13));
         this.area.setBackground(Color.WHITE);
-        JScrollPane items =new JScrollPane(this.area);    // put the Text Area Component in Scroll Pane
+        JScrollPane items = new JScrollPane(this.area);    // put the Text Area Component in Scroll Pane
 
         JLabel nameLabel = new JLabel("Enter a word");
 
@@ -99,7 +101,6 @@ public class RequestWindow extends JFrame {
             }
         });
         this.send.setEnabled(false);
-
 
 
         GroupLayout layout = new GroupLayout(contentPane);
@@ -153,7 +154,7 @@ public class RequestWindow extends JFrame {
         contentPane.setLayout(layout);
     }
 
-    public void notify(String input){
+    public void notify(String input) {
         this.area.setText(input);
     }
 

@@ -39,7 +39,7 @@ public class Main {
 
         HTTPManager manager = new HTTPManager(in, out);
 
-        Model model = null;
+        ModelFacade model = null;
 
         String apiId = "";
         String apiKey = "";
@@ -84,8 +84,6 @@ public class Main {
         } catch (ParseException e){
             return;
         }
-
-        model = new ModelFacade(manager, db);
 
         model.logIn(apiId, apiKey);
 
