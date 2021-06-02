@@ -39,7 +39,7 @@ public class Main {
 
         HTTPManager manager = new HTTPManager(in, out);
 
-        ModelFacade model = null;
+        ModelFacade model = new ModelFacade(manager, db);
 
         String apiId = "";
         String apiKey = "";
