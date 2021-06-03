@@ -3,9 +3,22 @@ package model;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/**
+ * Decode the information from the JSONObject form to the String.
+ * */
 public class Decoder {
 
-
+    /**
+     * Decode the information from the JSONObject about root forms of a given word input.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * None.<br>
+     *
+     * @param raw JSONObject includes the information about the root forms of a given word input
+     *
+     * @return The data about the given word input in the form of String.
+     */
     public static String rootDecode(JSONObject raw) {
         StringBuilder ret = new StringBuilder();
 
@@ -33,6 +46,17 @@ public class Decoder {
         return ret.toString();
     }
 
+    /**
+     * Decode the information from the JSONObject about entries of a given word input.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * None.<br>
+     *
+     * @param raw JSONObject includes the information about the entires of a given word input
+     *
+     * @return The data about the given word input in the form of String
+     */
     public static String entryDecode(JSONObject raw) {
         StringBuilder ret = new StringBuilder("Word: ");
         ret.append((String) raw.get("id"));

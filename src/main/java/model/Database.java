@@ -10,9 +10,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/**
+ * Database management module, with which user can read from or write data into the database.
+ * */
 public class Database {
 
+    /**
+     * Retrieve the data describing the given word either from database.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * If the given word has been stored in the cache before, the data will be return, otherwise an empty string
+     * will be returned.<br>
+     *
+     * @param word The given word from user input.
+     *
+     * @return The data about the given word input in the form of String
+     */
     public String entityExists(String word) {
         JSONParser parser = new JSONParser();
         Connection connection = null;
@@ -44,6 +58,17 @@ public class Database {
         return null;
     }
 
+    /**
+     * Update the data describing the given word into the database.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * If the given word has been stored in the cache before, the data will be return, otherwise an empty string
+     * will be returned.<br>
+     *
+     * @param word The given word from user input.
+     * @param data The text describing the word.
+     */
     public void updateEntity(String word, String data) {
         Connection connection = null;
         try {

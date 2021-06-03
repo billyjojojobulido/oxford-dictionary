@@ -2,6 +2,9 @@ package model;
 
 import org.json.simple.JSONObject;
 
+/**
+ * The Dummy Version of the OutputHTTP module
+ * */
 public class DummyOutput extends OutputHTTP {
 
     @Override

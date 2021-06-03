@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * The Dummy Version of the InputHTTP module
+ * */
 public class DummyInput extends InputHTTP {
 
     @Override
@@ -7,6 +10,7 @@ public class DummyInput extends InputHTTP {
         return true;
     }
 
+    @Override
     public String getRoots(String wordID, String apiId, String apiKey) {
         return "swims is not a header word\n" +
                 "Roots:\n" +
@@ -14,6 +18,7 @@ public class DummyInput extends InputHTTP {
                 "swim: Noun\n";
     }
 
+    @Override
     public String getWord(String wordID, String apiId, String apiKey) {
         return "Word: software\n" +
                 "Pronunciations: \n" +

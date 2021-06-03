@@ -1,15 +1,16 @@
 package view;
 
 import controller.RequestWindowController;
-import org.json.simple.JSONObject;
-
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.concurrent.ExecutionException;
 
+/**
+ * VIEW in MVC: The GUI module that present the data.
+ * */
 public class RequestWindow extends JFrame {
     static RequestWindow frame;
     private JPanel contentPane;
@@ -19,43 +20,15 @@ public class RequestWindow extends JFrame {
     private JTextField word;
     private RequestWindowController controller;
 
-    class ThreadSender implements Runnable {
-        @Override
-        public void run() {
-            controller.reportData("Your Search Results for " + word.getText(), area.getText());
-            send.setEnabled(false);
-        }
-
-    }
-
-    class ThreadChecker implements Runnable {
-        @Override
-        public void run() {
-            String wordToCheck = word.getText();
-            if (wordToCheck == null || wordToCheck.length() == 0) {
-                JOptionPane.showMessageDialog(RequestWindow.this, "Please Enter A Word!");
-                return;
-            }
-            boolean cached = controller.checkCache(wordToCheck);
-            String ret = null;
-            if (cached) {
-                if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)) {
-                    ret = controller.retrieveData(wordToCheck, true);
-                    controller.updateView(ret);
-                    send.setEnabled(true);
-                    return;
-                }
-            }
-            ret = controller.retrieveData(wordToCheck, false);
-            controller.updateView(ret);
-            send.setEnabled(true);
-        }
-    }
-
 
     /**
-     * setting up the interface frame
-     **/
+     * Constructor.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     *
+     * @param controller an instance of RequestWindowController class. May not be NULL
+     */
     public RequestWindow(RequestWindowController controller) {
         this.controller = controller;
 
@@ -87,8 +60,42 @@ public class RequestWindow extends JFrame {
         this.check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Thread checkerThread = new Thread(new ThreadChecker());
-                checkerThread.start();
+                SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
+                    @Override
+                    protected String doInBackground() throws Exception {
+                        String wordToCheck = word.getText();
+                        if (wordToCheck == null || wordToCheck.length() == 0) {
+                            JOptionPane.showMessageDialog(RequestWindow.this, "Please Enter A Word!");
+                            return "No Result Found";
+                        }
+                        boolean cached = controller.checkCache(wordToCheck);
+                        String ret = null;
+                        if (cached) {
+                            if (0 == JOptionPane.showConfirmDialog(RequestWindow.this, "This word has been cached before, would you like to read from the cache?", "Options", 0)) {
+                                ret = controller.retrieveData(wordToCheck, true);
+                                return ret;
+                            }
+                        }
+                        return controller.retrieveData(wordToCheck, false);
+
+                    }
+
+                    @Override
+                    protected void done() {
+                        String text;
+                        try {
+                            // Retrieve the return value of doInBackground.
+                            text = get();
+                            controller.updateView(text);
+                            send.setEnabled(true);
+                        } catch (InterruptedException e) {
+                            controller.updateView("No Result Found");
+                        } catch (ExecutionException e) {
+                            controller.updateView("No Result Found");
+                        }
+                    }
+                };
+                worker.execute();
             }
         });
 
@@ -96,8 +103,27 @@ public class RequestWindow extends JFrame {
         this.send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Thread senderThread = new Thread(new ThreadSender());
-                senderThread.start();
+                SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+                    @Override
+                    protected Boolean doInBackground() throws Exception {
+                        controller.reportData("Your Search Results for " + word.getText(), area.getText());
+                        return true;
+                    }
+
+                    @Override
+                    protected void done() {
+                        boolean status = false;
+                        try{
+                            status = get();
+                        } catch (InterruptedException e){
+                            JOptionPane.showMessageDialog(RequestWindow.this, "Failed To Send Email");
+                        } catch (ExecutionException e){
+                            JOptionPane.showMessageDialog(RequestWindow.this, "Failed To Send Email");
+                        }
+                        send.setEnabled(false);
+                    }
+                };
+                worker.execute();
             }
         });
         this.send.setEnabled(false);
@@ -154,7 +180,19 @@ public class RequestWindow extends JFrame {
         contentPane.setLayout(layout);
     }
 
+    /**
+     * update the data presentation in the GUI.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * the input string will be displayed on the text area of the GUI
+     *
+     * @param input text that want to display on the GUI. May not be NULL, but can be empty
+     */
     public void notify(String input) {
+        if (input == null){
+            return;
+        }
         this.area.setText(input);
     }
 
