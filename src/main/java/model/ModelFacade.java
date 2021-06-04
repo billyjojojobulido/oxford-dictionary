@@ -116,7 +116,7 @@ public class ModelFacade{
      * @return true if email sent successfully, false otherwise
      */
     public boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String value, String replyName) {
-        JSONObject ret = manager.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, "text/plain", value, replyName);
+        JSONObject ret = manager.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, "text/html", value, replyName);
         return ret != null;
     }
 
@@ -138,5 +138,7 @@ public class ModelFacade{
         }
         return ret;
     }
+
+
 
 }

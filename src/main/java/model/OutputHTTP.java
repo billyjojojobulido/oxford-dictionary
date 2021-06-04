@@ -38,8 +38,10 @@ public class OutputHTTP {
                                 String targetName, String signature, String subject, String type, String value,
                                 String replyName) {
         String link = "https://api.sendgrid.com/v3/mail/send";
-        value = value.replace('\n', ' ');
-        value = value.replace('\t', ' ');
+        value = "<p>" + value;
+        value = value.replace("\n", "</p><p>");
+        value = value.replace("\t", "  ");
+        value += "</p>";
 
         try {
             URL url = new URL(link);

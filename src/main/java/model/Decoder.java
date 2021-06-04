@@ -159,8 +159,6 @@ public class Decoder {
                 }
             }
         }
-
-
         return ret.toString();
     }
 
