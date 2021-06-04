@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"controller","h":"","u":""},{"l":"model","h":"","u":""},{"l":"view","h":"","u":""},{"l":"所有程序包","h":"","u":"allpackages-index.html"}]
