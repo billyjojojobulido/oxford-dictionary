@@ -51,7 +51,7 @@ public class ModelFacadeTest {
         model.sendEmail("someString", "someString", "someString", "someString",
                 "someString", "someString", "someString", "someString", "someString");
         verify(mockHTTP, atLeast(1)).sendEmail("someString", "someString",
-                "someString", "someString", "someString", "someString", "someString", "text/plain", "someString", "someString");
+                "someString", "someString", "someString", "someString", "someString", "text/html", "someString", "someString");
     }
 
     @Test
