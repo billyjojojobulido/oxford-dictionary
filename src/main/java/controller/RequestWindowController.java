@@ -32,6 +32,7 @@ public class RequestWindowController {
     public RequestWindowController(ModelFacade model) {
         this.backEnd = model;
         this.frontEnd = new RequestWindow(this);
+        thresholdRequest();
     }
 
     /**
