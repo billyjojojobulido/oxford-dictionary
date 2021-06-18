@@ -20,7 +20,6 @@ public class RequestWindow extends JFrame {
     private JTextField word;
     private RequestWindowController controller;
 
-
     /**
      * Constructor.<br><br>
      * <b>Preconditions:</b><br>
@@ -86,6 +85,7 @@ public class RequestWindow extends JFrame {
                         try {
                             // Retrieve the return value of doInBackground.
                             text = get();
+                            controller.blink(text);
                             controller.updateView(text);
                             send.setEnabled(true);
                         } catch (InterruptedException e) {
@@ -196,4 +196,29 @@ public class RequestWindow extends JFrame {
         this.area.setText(input);
     }
 
+    /**
+     * change the background from dark to light five times.<br><br>
+     * <b>Preconditions:</b><br>
+     * entry selected has more characters than the threshold<br>
+     * <b>Postconditions:</b><br>
+     * None
+     *
+     * */
+    public void blink(){
+        SwingWorker<Boolean, Void> worker = new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                int count = 5;
+                while (count > 0){
+                    area.setBackground(Color.BLUE);
+                    Thread.sleep(50);
+                    area.setBackground(Color.WHITE);
+                    Thread.sleep(50);
+                    count --;
+                }
+                return true;
+            }
+        };
+        worker.execute();
+    }
 }

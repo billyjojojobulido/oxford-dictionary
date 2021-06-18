@@ -27,7 +27,6 @@ public class ModelFacade{
         this.threshold = 5;
     }
 
-
     /**
      * Determine if the given word input has been stored in cache or not.<br><br>
      * <b>Preconditions:</b><br>
@@ -43,6 +42,16 @@ public class ModelFacade{
         return null != this.db.entityExists(word);
     }
 
+
+    public void setThreshold(int number){
+        if (number >= 3 && number <= 20){
+            this.threshold = number;
+        }
+    }
+
+    public boolean timeToBlink(String text){
+        return this.manager.exceedThreshold(text, this.threshold);
+    }
 
     /**
      * Retrieve the data describing the given word either from database.<br><br>
@@ -142,17 +151,6 @@ public class ModelFacade{
             this.db.updateEntity(word, ret);
         }
         return ret;
-    }
-
-    public void setThreshold(int number){
-        if (number < 3 || number > 20){
-            return;
-        }
-        this.threshold = number;
-    }
-
-    public boolean timeToBlink(String text){
-        return this.manager.exceedThreshold(text, this.threshold);
     }
 
 

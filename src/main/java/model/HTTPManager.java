@@ -128,7 +128,9 @@ public class HTTPManager {
     }
 
     public boolean exceedThreshold(String text, int threshold){
-        return false;
+        String entry = Decoder.getEntry(text);
+        if (entry == null) return false;
+        return entry.length() > threshold;
     }
 
 }

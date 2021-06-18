@@ -60,6 +60,21 @@ public class RequestWindowController {
         this.replyName = replyName;
     }
 
+    public void thresholdRequest(){
+        Object[] options = new Object[18];
+        for (int i = 3; i<=20; i++){
+            options[i-3] = i;
+        }
+        try {
+            int threshold = (Integer) JOptionPane.showInputDialog(null,
+                    "Please select a threshold character length:\n", "Set Threshold",
+                    JOptionPane.QUESTION_MESSAGE, null, options, 3);
+            this.backEnd.setThreshold(threshold);
+        } catch (NullPointerException e){
+
+        }
+    }
+
     public void run() {
         this.frontEnd.setVisible(true);
     }
@@ -128,5 +143,10 @@ public class RequestWindowController {
         this.frontEnd.notify(input);
     }
 
+    public void blink(String text){
+        if (this.backEnd.timeToBlink(text)){
+            this.frontEnd.blink();
+        }
+    }
 
 }

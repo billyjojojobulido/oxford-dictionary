@@ -162,5 +162,25 @@ public class Decoder {
         return ret.toString();
     }
 
+    public static String getEntry(String text){
+        String[] lines = text.split("\n");
+        if (lines.length <= 1){
+            return null;
+        }
+        // entry
+        if (lines[0].split(":").length > 1){
+            return lines[0].split(":")[1];
+        }
+        // lemma
+        else if (lines.length < 3){
+            return null;
+        }
+        if (lines[2].split(":").length > 1){
+            return lines[2].split(":")[0];
+        } else {
+            return null;
+        }
+    }
+
 
 }
