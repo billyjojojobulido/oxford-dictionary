@@ -42,13 +42,23 @@ public class ModelFacade{
         return null != this.db.entityExists(word);
     }
 
-
     public void setThreshold(int number){
         if (number >= 3 && number <= 20){
             this.threshold = number;
         }
     }
 
+    /**
+     * Determine if the GUI should blink.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * None.<br>
+     *
+     * @param text The response from api of a given word
+     *
+     * @return true if the entry length exceeds the threshold, false otherwise.
+     */
     public boolean timeToBlink(String text){
         return this.manager.exceedThreshold(text, this.threshold);
     }

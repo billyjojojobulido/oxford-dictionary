@@ -61,6 +61,14 @@ public class RequestWindowController {
         this.replyName = replyName;
     }
 
+    /**
+     * requesting the user input threshold by displaying a Input Dialog <br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * the input threshold data will be set to the ModelFacade.<br>
+     *
+     */
     public void thresholdRequest(){
         Object[] options = new Object[18];
         for (int i = 3; i<=20; i++){
@@ -144,6 +152,15 @@ public class RequestWindowController {
         this.frontEnd.notify(input);
     }
 
+    /**
+     * determine if the GUI should blink at the given entries.<br><br>
+     * <b>Preconditions:</b><br>
+     * text is a response from the api corresponding to a user input word<br>
+     * <b>Postconditions:</b><br>
+     * if the length of entry exceeds the threshold, GUI will blink.<br>
+     *
+     * @param text The response from the api corresponding to a user input word
+     */
     public void blink(String text){
         if (this.backEnd.timeToBlink(text)){
             this.frontEnd.blink();

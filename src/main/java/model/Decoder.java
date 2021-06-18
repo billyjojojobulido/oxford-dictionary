@@ -162,6 +162,17 @@ public class Decoder {
         return ret.toString();
     }
 
+    /**
+     * Filter out the entry from the JSONObject about entries of a given word input.<br><br>
+     * <b>Preconditions:</b><br>
+     * None<br>
+     * <b>Postconditions:</b><br>
+     * None.<br>
+     *
+     * @param text JSONObject includes the information about the entries or roots of a given word input
+     *
+     * @return The entry as a single string object
+     */
     public static String getEntry(String text){
         String[] lines = text.split("\n");
         if (lines.length <= 1){

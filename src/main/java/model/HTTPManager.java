@@ -127,6 +127,18 @@ public class HTTPManager {
         return output.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, type, value, replyName);
     }
 
+    /**
+     * Determine if the entry length exceeds the threshold or not.<br><br>
+     * <b>Preconditions:</b><br>
+     * text is a response from the api corresponding to a user input word <br>
+     * <b>Postconditions:</b><br>
+     * None.<br>
+     *
+     * @param text The response from api of a given word
+     * @param threshold The maximum length of the entry
+     *
+     * @return true if the entry length exceeds the threshold, false otherwise.
+     */
     public boolean exceedThreshold(String text, int threshold){
         String entry = Decoder.getEntry(text);
         if (entry == null) return false;
