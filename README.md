@@ -133,6 +133,14 @@ After the result is displayed on the text area of the GUI, the "send email" butt
             - Dummy versions are now created
             - Javadoc added
             
+  > Round 2: Extension 
+  
+      RED      `commit ID: 9c48e8d0979739e48ace7316833559ffc2d84d37`
+      
+      GREED    `commit ID: edc712b09fdab2ac221f176f492f3bf67d7bc215`
+      
+      REFACTOR `commit ID: 62c0cf17ba1d00be7f87a1e4bcd7be8712c45b24`
+            
 ## Citation
 * The scaffold codes for the GUI in package view(src/main/view/RequestWindow.java) are mainly from the code I wrote in this unit for task3.
 * The scaffold codes for the HTTP GET and POST request(src/main/model/InputHTTP.java, OutputHTTP.java) are mainly from the code I wrote in this unit for task3.
