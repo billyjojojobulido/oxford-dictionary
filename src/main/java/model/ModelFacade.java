@@ -139,6 +139,10 @@ public class ModelFacade{
         return ret;
     }
 
+    public boolean timeToBlink(String text){
+        return false;
+    }
+
 
 
 }

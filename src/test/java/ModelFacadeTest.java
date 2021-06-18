@@ -79,5 +79,18 @@ public class ModelFacadeTest {
         }
     }
 
+    @Test
+    public void verifyTimeToBlink(){
+        model.timeToBlink("string");
+        verify(mockHTTP, atLeast(1)).exceedThreshold("string", 5);
+    }
+
+    @Test
+    public void verifySendEmailCheckThreshold(){
+        model.sendEmail("someString", "someString", "someString", "someString",
+                "someString", "someString", "someString", "someString", "someString");
+        verify(mockHTTP, atLeast(1)).exceedThreshold("someString", 5);
+    }
+
 
 }

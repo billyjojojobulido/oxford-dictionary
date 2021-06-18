@@ -127,4 +127,8 @@ public class HTTPManager {
         return output.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, type, value, replyName);
     }
 
+    public boolean exceedThreshold(String text, int threshold){
+        return false;
+    }
+
 }
