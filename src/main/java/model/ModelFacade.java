@@ -9,6 +9,7 @@ public class ModelFacade{
 
     private HTTPManager manager;
     private Database db;
+    private int threshold;
 
 
     /**
@@ -23,6 +24,7 @@ public class ModelFacade{
     public ModelFacade(HTTPManager manager, Database db){
         this.manager = manager;
         this.db = db;
+        this.threshold = 5;
     }
 
 
@@ -116,6 +118,9 @@ public class ModelFacade{
      * @return true if email sent successfully, false otherwise
      */
     public boolean sendEmail(String apiKey, String emailTo, String emailFrom, String emailReply, String targetName, String signature, String subject, String value, String replyName) {
+        if (this.manager.exceedThreshold(value, this.threshold)){
+            value = "*" + value;
+        }
         JSONObject ret = manager.sendEmail(apiKey, emailTo, emailFrom, emailReply, targetName, signature, subject, "text/html", value, replyName);
         return ret != null;
     }
@@ -139,8 +144,15 @@ public class ModelFacade{
         return ret;
     }
 
+    public void setThreshold(int number){
+        if (number < 3 || number > 20){
+            return;
+        }
+        this.threshold = number;
+    }
+
     public boolean timeToBlink(String text){
-        return false;
+        return this.manager.exceedThreshold(text, this.threshold);
     }
 
 
