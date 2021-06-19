@@ -142,6 +142,7 @@ public class HTTPManager {
     public boolean exceedThreshold(String text, int threshold){
         String entry = Decoder.getEntry(text);
         if (entry == null) return false;
+        entry = entry.strip();
         return entry.length() > threshold;
     }
 
