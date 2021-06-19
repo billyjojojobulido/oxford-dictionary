@@ -139,7 +139,7 @@ After the result is displayed on the text area of the GUI, the "send email" butt
       
       GREED    `commit ID: edc712b09fdab2ac221f176f492f3bf67d7bc215`
       
-      REFACTOR `commit ID: 62c0cf17ba1d00be7f87a1e4bcd7be8712c45b24`
+      REFACTOR `commit ID: 7b8ce4f79e10c5634828d18abd275f233a94af92`
             
 ## Citation
 * The scaffold codes for the GUI in package view(src/main/view/RequestWindow.java) are mainly from the code I wrote in this unit for task3.
